@@ -28,7 +28,7 @@ const FicheEmp = ({ user }) => {
             </Button>
 
             <Modal
-                title="Fiche Employée"
+                title="Employee record"
                 // centered
                 open={modal2Open}
                 onOk={() => handleSubmt()}
