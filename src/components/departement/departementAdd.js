@@ -24,7 +24,7 @@ const DepartementAdd = ({ triggerInsertEmp }) => {
             .validateFields()
             .then((values) => {
                 console.log('test', values);
-                // Trigger the callback to add employee with the validated values
+                // Trigger the callback to add department with the validated values
                 triggerInsertEmp(values);
                 // Close the modal and reset form fields
                 setModal2Open(false);
@@ -78,29 +78,8 @@ const DepartementAdd = ({ triggerInsertEmp }) => {
                         <Row>
                             <Col span={24}>
                                 <Form.Item
-                                    label="Id"
-                                    name="id"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your id!',
-                                        }, {
-                                            validator: (_, value) => {
-                                                if (!value || /^[0-9]+$/.test(value))
-                                                {
-                                                    return Promise.resolve();
-                                                }
-                                                return Promise.reject('Please enter a valid number for ID!');
-                                            },
-                                        },
-                                    ]}>
-                                    <Input />
-                                </Form.Item>
-
-
-                                <Form.Item
                                     label="departement"
-                                    name="departement"
+                                    name="name"
                                     rules={[
                                         {
                                             required: true,

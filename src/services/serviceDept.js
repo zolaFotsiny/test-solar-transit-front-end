@@ -4,6 +4,7 @@ import axios from 'axios';
 
 
 const BASE_URL = "https://solar-transit-back-end.onrender.com";
+// const BASE_URL = "localhost:3000";
 
 
 const axiosInstance = axios.create({
