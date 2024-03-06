@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Layout, Menu, theme, Divider } from 'antd';
 
 import {
-
+    FileExcelFilled,
     UsergroupAddOutlined
 } from '@ant-design/icons';
 
@@ -11,6 +11,7 @@ import Test from '../components/Test';
 import DepartementList from '../components/departement/departementList';
 import Head from '../components/Header/Head';
 import TablesEmployee from '../components/employee/TableEmployee';
+import TimeLine from '../components/Import/TimeLine';
 const { Content, Sider, Footer } = Layout;
 
 const Index = () => {
@@ -21,6 +22,7 @@ const Index = () => {
     const items = [
         getItem('Depatement', '1', <UsergroupAddOutlined />),
         getItem('Employee', '2', <UsergroupAddOutlined />),
+        getItem('Manage Files', '3', <FileExcelFilled />),
     ];
 
     const {
@@ -89,6 +91,12 @@ const Index = () => {
                             selectedMenuItem === '2' &&
                             <>
                                 <TablesEmployee  ></TablesEmployee>
+                            </>
+                        }
+                        {
+                            selectedMenuItem === '3' &&
+                            <>
+                                <TimeLine  ></TimeLine>
                             </>
                         }
 
