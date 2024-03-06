@@ -6,7 +6,27 @@ import { showErrorNotification, showSuccessNotification } from '../Notification'
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import Highlighter from 'react-highlight-words';
-import moment from 'moment';
+import Filtre from '../Filtre/Filtre'
+import AjouterEmployee from './AjouterEmployee';
+
+const criteria = [
+    {
+        label: 'First Name',
+        name: 'firstname',
+        type: 'text',
+
+    },
+    {
+        label: 'Last Name',
+        name: 'lastname',
+        type: 'text',
+    },
+    {
+        label: 'Departement',
+        name: 'departement',
+        type: 'text'
+    }
+];
 
 
 
@@ -122,7 +142,15 @@ export default function TablesEmployee() {
 
         },
         {
-            title: 'Departement',
+            title: 'Reference',
+            dataIndex: 'employeeIdentifier',
+            defaultSortOrder: 'ascend',
+            sorter: (a, b) => a.id - b.id,
+            ...getColumnSearchProps('employeeIdentifier'),
+
+        },
+        {
+            title: 'Department',
             dataIndex: 'departmentId',
             ...getColumnSearchProps('departmentId'),
         },
@@ -191,7 +219,8 @@ export default function TablesEmployee() {
             data.push({
                 key: i,
                 id: u.id,
-                departmentId: u.departmentId,
+                employeeIdentifier: u.employeeIdentifier,
+                departmentId: u.department.name,
                 firstName: u.firstName,
                 lastName: u.lastName,
             });
@@ -200,10 +229,33 @@ export default function TablesEmployee() {
     }
 
 
+    //trigger function
+
+    const triggerInsertEmp = (data) => {
+        setLoading(true);
+        saveEmployee(data).then(rep => {
+            if (rep.data.status === 201)
+            {
+                console.log('rep', rep);
+                let userPlusOne = [...user, rep.data.data]
+                setuser(userPlusOne);
+                setLoading(false);
+                showSuccessNotification(rep.data.message);
+            }
+            else
+            {
+                showSuccessNotification(rep.data.message);
+            }
 
 
-
-
+        }).catch(err => {
+            showErrorNotification('somme error')
+            console.log('somme err', err);
+        })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
     return (
         <div>
@@ -214,6 +266,7 @@ export default function TablesEmployee() {
                 }}
             >
 
+                <Filtre criteria={criteria} titleTooltip='Add Employee' children={<AjouterEmployee triggerInsertEmp={triggerInsertEmp} />} ></Filtre>
 
                 <Divider> </Divider>
 
@@ -227,11 +280,9 @@ export default function TablesEmployee() {
             </div>
 
             {
-                // loading ? <h1>HUHU</h1> : <h1>tesst</h1>
                 loading ? <Spin size='large' spinning> </Spin> : null
             }
-
-
+            <h1>Employee List</h1>
             <Table columns={columns} dataSource={data} />
         </div>
     );
