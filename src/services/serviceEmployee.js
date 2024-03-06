@@ -71,7 +71,7 @@ export const updateEmployee = async (id, data) => {
     {
         let response = '';
         // console.log(`HUHU_Call_patch:${BASE_URL}/employee`);
-        response = await axiosInstance.patch(`${BASE_URL}/employee/${id}`, data);
+        response = await axiosInstance.put(`${BASE_URL}/employee/${id}`, data);
         return response;
     } catch (error)
     {
