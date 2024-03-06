@@ -12,6 +12,7 @@ import DepartementList from '../components/departement/departementList';
 import Head from '../components/Header/Head';
 import TablesEmployee from '../components/employee/TableEmployee';
 import TimeLine from '../components/Import/TimeLine';
+import AttendanceList from '../components/attendance/attendanceList';
 const { Content, Sider, Footer } = Layout;
 
 const Index = () => {
@@ -22,7 +23,8 @@ const Index = () => {
     const items = [
         getItem('Depatement', '1', <UsergroupAddOutlined />),
         getItem('Employee', '2', <UsergroupAddOutlined />),
-        getItem('Manage Files', '3', <FileExcelFilled />),
+        getItem('Attendance', '3', <UsergroupAddOutlined />),
+        getItem('Manage Files', '4', <FileExcelFilled />),
     ];
 
     const {
@@ -94,9 +96,15 @@ const Index = () => {
                             </>
                         }
                         {
-                            selectedMenuItem === '3' &&
+                            selectedMenuItem === '4' &&
                             <>
                                 <TimeLine  ></TimeLine>
+                            </>
+                        }
+                        {
+                            selectedMenuItem === '3' &&
+                            <>
+                                <AttendanceList  ></AttendanceList>
                             </>
                         }
 
