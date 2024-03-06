@@ -5,6 +5,21 @@ import { Spin, Divider, Table } from 'antd';
 import { showErrorNotification, showSuccessNotification } from '../Notification';
 import DepartementUpdate from './departementUpdate';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
+import Filtre from '../Filtre/Filtre';
+
+
+const criteria = [
+    {
+        label: 'Id',
+        name: 'id',
+        type: 'text',
+    },
+    {
+        label: 'Name',
+        name: 'name',
+        type: 'text',
+    }
+];
 export default function DepartementList() {
     const [dept, setdept] = useState([])
 
@@ -119,9 +134,24 @@ export default function DepartementList() {
     });
     return (
         <div>
+            <div
+                style={{
+                    marginBottom: 16,
+                }}
+            >
 
-            <DepartementAdd triggerInsertDept={triggerInsertDept}></DepartementAdd>
+                <Filtre criteria={criteria} titleTooltip='Add Employee' children={<DepartementAdd triggerInsertDept={triggerInsertDept} />} ></Filtre>
+
+                <span
+                    style={{
+                        marginLeft: 8,
+                    }}
+                >
+
+                </span>
+            </div>
             <Divider></Divider>
+            <h1>Department List</h1>
             <Table columns={columns} dataSource={dept} onChange={onChange} />
         </div>
     )
