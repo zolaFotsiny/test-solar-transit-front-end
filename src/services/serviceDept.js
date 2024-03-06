@@ -2,15 +2,16 @@ import axios from 'axios';
 
 
 
+
 const BASE_URL = "http://localhost:8080";
 
 
 const axiosInstance = axios.create({
-    baseURL: BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*', // Assurez-vous d'ajuster ceci en fonction de vos besoins
-    },
+    baseURL: BASE_URL
+    // headers: {
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*', // Assurez-vous d'ajuster ceci en fonction de vos besoins
+    // },
 });
 
 
