@@ -1,0 +1,8 @@
+.css-dev-only-do-not-override-i1mju1 .ant-table-wrapper .ant-table-filter-trigger {
+    color: rgb(255, 255, 255); /* Utilisez la couleur blanche définie */
+}
+:where(.css-dev-only-do-not-override-i1mju1).ant-layout .ant-layout-sider-trigger {
+
+    background: rgb(0, 80, 155);
+  
+}

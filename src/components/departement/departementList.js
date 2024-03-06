@@ -6,7 +6,7 @@ import { showErrorNotification, showSuccessNotification } from '../Notification'
 import DepartementUpdate from './departementUpdate';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import Filtre from '../Filtre/Filtre';
-
+import './styles.css'
 
 const criteria = [
     {

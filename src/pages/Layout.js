@@ -9,6 +9,8 @@ import {
 
 import Test from '../components/Test';
 import DepartementList from '../components/departement/departementList';
+import Head from '../components/Header/Head';
+import TablesEmployee from '../components/employee/TableEmployee';
 const { Content, Sider, Footer } = Layout;
 
 const Index = () => {
@@ -18,6 +20,7 @@ const Index = () => {
 
     const items = [
         getItem('Depatement', '1', <UsergroupAddOutlined />),
+        getItem('Employee', '2', <UsergroupAddOutlined />),
     ];
 
     const {
@@ -58,7 +61,7 @@ const Index = () => {
 
             <Layout>
                 {/* //Header */}
-
+                <Head></Head>
                 {/* //End Header */}
 
 
@@ -80,6 +83,12 @@ const Index = () => {
                             selectedMenuItem === '1' &&
                             <>
                                 <DepartementList ></DepartementList>
+                            </>
+                        }
+                        {
+                            selectedMenuItem === '2' &&
+                            <>
+                                <TablesEmployee  ></TablesEmployee>
                             </>
                         }
 
