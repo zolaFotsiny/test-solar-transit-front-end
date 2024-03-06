@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Table, Input, Divider } from 'antd';
+import { Table, Input, Divider, Spin } from 'antd';
 import './styles.css'
 import { getEmployee, saveEmployee } from '../../services/serviceEmployee';
 import { showErrorNotification, showSuccessNotification } from '../Notification';
@@ -90,7 +90,8 @@ export default function TablesEmployee() {
         onFilter: (value, record) =>
             record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
-            if (visible) {
+            if (visible)
+            {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
         },
@@ -184,7 +185,8 @@ export default function TablesEmployee() {
     };
 
     const data = [];
-    if (user && user.length > 0) {
+    if (user && user.length > 0)
+    {
         user.map((u, i) => {
             data.push({
                 key: i,
@@ -224,7 +226,10 @@ export default function TablesEmployee() {
                 </span>
             </div>
 
-
+            {
+                // loading ? <h1>HUHU</h1> : <h1>tesst</h1>
+                loading ? <Spin size='large' spinning> </Spin> : null
+            }
 
 
             <Table columns={columns} dataSource={data} />
