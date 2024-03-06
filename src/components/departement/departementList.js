@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import DepartementAdd from './departementAdd'
-import { getDept, saveDept } from '../../services/serviceDept'
+import { getDept, saveDept, updateDept } from '../../services/serviceDept'
 import { Spin, Divider, Table } from 'antd';
 import { showErrorNotification, showSuccessNotification } from '../Notification';
-import { notification } from 'antd';
+import DepartementUpdate from './departementUpdate';
+import { UserOutlined, EditOutlined } from '@ant-design/icons';
 export default function DepartementList() {
     const [dept, setdept] = useState([])
 
@@ -22,9 +23,7 @@ export default function DepartementList() {
     const onChange = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
-    const triggerInsertEmp = (data) => {
-
-
+    const triggerInsertDept = (data) => {
         saveDept(data).then(rep => {
             if (rep.data.status === 201)
             {
@@ -45,6 +44,37 @@ export default function DepartementList() {
                 // setLoading(false);
             });
     };
+
+    const triggerUpdateDept = (dept) => {
+        console.log('to update ', dept);
+
+        let data = { "name": dept.firstName };
+
+        updateDept(dept.id, data)
+            .then(rep => {
+                console.log('update successs', rep);
+                // setuser((prevUsers) => {
+                //     return prevUsers.map((prevUser) => {
+                //         if (prevUser.id === user.id)
+                //         {
+                //             // If the user ID matches, update the user
+                //             showSuccessNotification();
+                //             return { ...prevUser, ...data };
+                //         }
+                //         return prevUser;
+                //     });
+                // });
+                return true; // Return true for success
+            })
+            .catch(err => {
+                showErrorNotification('somme error')
+                console.log('some err', err);
+                return false; // Return false for failure
+            }).finally(() => {
+                // setLoading(false);
+            });
+    };
+
     // edit column table
     let columns = [
         {
@@ -58,6 +88,20 @@ export default function DepartementList() {
             title: 'Department',
             dataIndex: 'name',
         },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            align: 'center',
+            render: (actions, record) => (
+
+                // actions.map((action, index) => (
+                <React.Fragment > </React.Fragment>
+                // ))
+
+
+            ),
+        },
+
 
     ];
     //format data to add in table
@@ -67,12 +111,16 @@ export default function DepartementList() {
             key: d.id,
             id: d.id,
             name: d.name,
+            // action: <DepartementUpdate key={`update-${i}`} triggerUpdateDept={triggerUpdateDept} dept={d} />,
+            action: [
+                <DepartementUpdate key={`update-${i}`} triggerUpdateDept={triggerUpdateDept} dept={d} />,
+            ],
         });
     });
     return (
         <div>
 
-            <DepartementAdd triggerInsertEmp={triggerInsertEmp}></DepartementAdd>
+            <DepartementAdd triggerInsertDept={triggerInsertDept}></DepartementAdd>
             <Divider></Divider>
             <Table columns={columns} dataSource={dept} onChange={onChange} />
         </div>

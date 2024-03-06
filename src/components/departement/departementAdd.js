@@ -5,7 +5,7 @@ import { Input, Space, Row, Col } from 'antd';
 //input
 import { PlusOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
-const DepartementAdd = ({ triggerInsertEmp }) => {
+const DepartementAdd = ({ triggerInsertDept }) => {
     const [modal2Open, setModal2Open] = useState(false);
     const [form] = Form.useForm();
     useEffect(() => {
@@ -17,16 +17,11 @@ const DepartementAdd = ({ triggerInsertEmp }) => {
         }
     }, [modal2Open, form]);
 
-
-
     function handleSubmt() {
         form
             .validateFields()
             .then((values) => {
-                console.log('test', values);
-                // Trigger the callback to add department with the validated values
-                triggerInsertEmp(values);
-                // Close the modal and reset form fields
+                triggerInsertDept(values);
                 setModal2Open(false);
                 form.resetFields();
             })
@@ -34,7 +29,6 @@ const DepartementAdd = ({ triggerInsertEmp }) => {
                 console.log('Validation Failed:', errorInfo);
             });
     }
-
 
     const handleEnterPress = (event) => {
         if (event.key === 'Enter')
