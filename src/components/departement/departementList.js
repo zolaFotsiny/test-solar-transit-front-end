@@ -22,14 +22,16 @@ const criteria = [
 ];
 export default function DepartementList() {
     const [dept, setdept] = useState([])
-
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
+        setLoading(true);
         getDept().then(rep => {
 
             setdept(rep.data.data);
         }).catch(err => {
             console.log('somme err', err);
         }).finally(() => {
+            setLoading(false);
         });
 
     }, [])
@@ -40,15 +42,13 @@ export default function DepartementList() {
     };
     const triggerInsertDept = (data) => {
         saveDept(data).then(rep => {
-            if (rep.data.status === 201)
-            {
+            if (rep.data.status === 201) {
 
                 let deptPlusOne = [...dept, rep.data.data]
                 setdept(deptPlusOne);
                 showSuccessNotification(rep.data.message);
             }
-            else
-            {
+            else {
                 showErrorNotification(rep.data.message)
             }
         }).catch(err => {
@@ -168,6 +168,9 @@ export default function DepartementList() {
             <Divider></Divider>
             <h1>Department List</h1>
             <Table columns={columns} dataSource={dept} onChange={onChange} />
+            {
+                loading ? <Spin tip="Loading..." size='large' spinning> </Spin> : null
+            }
         </div>
     )
 }

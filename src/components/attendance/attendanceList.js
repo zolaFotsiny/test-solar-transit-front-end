@@ -20,7 +20,7 @@ const criteria = [
 
 export default function AttendanceList() {
     const [attendance, setAttendance] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -35,6 +35,7 @@ export default function AttendanceList() {
 
 
     useEffect(() => {
+        setLoading(true);
         getAttendance().then(rep => {
             console.log('useEffecxt', rep.data);
             // console.log()
@@ -52,6 +53,8 @@ export default function AttendanceList() {
 
         }).catch(err => {
             console.log('error', err);
+        }).finally(() => {
+            setLoading(false);
         });
     }, []);
 
@@ -201,6 +204,9 @@ export default function AttendanceList() {
             <Filtre criteria={criteria}></Filtre>
 
             <Table columns={columns} dataSource={attendance} onChange={onChange} />
+            {
+                loading ? <Spin tip="Loading..." size='large' spinning> </Spin> : null
+            }
         </>
     );
 };

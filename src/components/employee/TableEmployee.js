@@ -111,8 +111,7 @@ export default function TablesEmployee() {
         onFilter: (value, record) =>
             record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
-            if (visible)
-            {
+            if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
         },
@@ -226,8 +225,7 @@ export default function TablesEmployee() {
     };
 
     const data = [];
-    if (user && user.length > 0)
-    {
+    if (user && user.length > 0) {
         user.map((u, i) => {
             data.push({
                 key: i,
@@ -250,16 +248,14 @@ export default function TablesEmployee() {
     const triggerInsertEmp = (data) => {
         setLoading(true);
         saveEmployee(data).then(rep => {
-            if (rep.data.status === 201)
-            {
+            if (rep.data.status === 201) {
                 console.log('rep', rep);
                 let userPlusOne = [...user, rep.data.data]
                 setuser(userPlusOne);
                 setLoading(false);
                 showSuccessNotification(rep.data.message);
             }
-            else
-            {
+            else {
                 showSuccessNotification(rep.data.message);
             }
 
@@ -290,8 +286,7 @@ export default function TablesEmployee() {
                 // Update the state using the set function
                 setuser((prevUsers) => {
                     return prevUsers.map((prevUser) => {
-                        if (prevUser.id === user.id)
-                        {
+                        if (prevUser.id === user.id) {
                             // If the user ID matches, update the user
                             showSuccessNotification();
                             return { ...prevUser, ...data };
@@ -326,12 +321,11 @@ export default function TablesEmployee() {
                 >
                 </span>
             </div>
-
-            {
-                loading ? <Spin size='large' spinning> </Spin> : null
-            }
             <h1>Employee List</h1>
             <Table columns={columns} dataSource={data} />
+            {
+                loading ? <Spin tip="Loading..." size='large' spinning> </Spin> : null
+            }
         </div>
     );
 }
