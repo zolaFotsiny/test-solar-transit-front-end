@@ -40,15 +40,13 @@ export default function DepartementList() {
     };
     const triggerInsertDept = (data) => {
         saveDept(data).then(rep => {
-            if (rep.data.status === 201)
-            {
+            if (rep.data.status === 201) {
                 console.log('insert', rep);
                 let deptPlusOne = [...dept, rep.data.data]
                 setdept(deptPlusOne);
                 showSuccessNotification(rep.data.message);
             }
-            else
-            {
+            else {
                 showErrorNotification(rep.data.message)
             }
         }).catch(err => {
@@ -119,6 +117,21 @@ export default function DepartementList() {
 
 
     ];
+    // function adding style to column
+    const addStyleToColumns = (columns, style) => {
+        return columns.map(column => ({
+            ...column,
+            onHeaderCell: () => ({
+
+                style: style
+            })
+        }));
+    };
+
+    columns = addStyleToColumns(columns, { backgroundColor: 'rgb(0, 80, 155)', color: 'white' });
+
+
+
     //format data to add in table
     const data = [];
     dept.map((d, i) => {
