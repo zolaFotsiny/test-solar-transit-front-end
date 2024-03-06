@@ -14,21 +14,21 @@ const ModalsUpdate = ({ triggerUpdateUser, user }) => {
     const [lastName, setLastName] = useState(user.lastName);
     const [dept, setdept] = useState([]);
     const [confirmLoading, setConfirmLoading] = useState(false);
+    const [isFetchDept, setisFetchDept] = useState(false)
     useEffect(() => {
+        if (!isFetchDept)
+        {
 
+            getDept().then(rep => {
+                setdept(rep.data.data);
+                setisFetchDept(true)
+            }).catch(err => {
+                console.log('somme err', err);
+            }).finally(() => {
+            });
+        }
 
-
-
-
-        console.log('user_____', user);
-        getDept().then(rep => {
-            console.log('repppp', rep.data);
-            setdept(rep.data.data);
-        }).catch(err => {
-            console.log('somme err', err);
-        }).finally(() => {
-        });
-    }, []);
+    }, [isFetchDept]);
 
 
     function handleSubmt() {

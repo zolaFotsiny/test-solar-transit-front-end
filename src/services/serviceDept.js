@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const BASE_URL = "https://solar-transit-back-end.onrender.com";
 
-
 const axiosInstance = axios.create({
     baseURL: BASE_URL
     // headers: {

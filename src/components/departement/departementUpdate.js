@@ -17,7 +17,7 @@ const DepartementUpdate = ({ triggerUpdateDept, dept }) => {
     function handleSubmt() {
         // setConfirmLoading(true);
 
-        console.log('dept', dept)
+
 
 
         // triggerUpdateDept({

@@ -25,7 +25,7 @@ export default function DepartementList() {
 
     useEffect(() => {
         getDept().then(rep => {
-            console.log('repppp', rep.data);
+
             setdept(rep.data.data);
         }).catch(err => {
             console.log('somme err', err);
@@ -40,13 +40,15 @@ export default function DepartementList() {
     };
     const triggerInsertDept = (data) => {
         saveDept(data).then(rep => {
-            if (rep.data.status === 201) {
-                console.log('insert', rep);
+            if (rep.data.status === 201)
+            {
+
                 let deptPlusOne = [...dept, rep.data.data]
                 setdept(deptPlusOne);
                 showSuccessNotification(rep.data.message);
             }
-            else {
+            else
+            {
                 showErrorNotification(rep.data.message)
             }
         }).catch(err => {
@@ -59,13 +61,13 @@ export default function DepartementList() {
     };
 
     const triggerUpdateDept = (dept) => {
-        console.log('to update ', dept);
+
 
         let data = { "name": dept.firstName };
 
         updateDept(dept.id, data)
             .then(rep => {
-                console.log('update successs', rep);
+
                 // setuser((prevUsers) => {
                 //     return prevUsers.map((prevUser) => {
                 //         if (prevUser.id === user.id)

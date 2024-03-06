@@ -17,7 +17,7 @@ export const showSuccessNotification = (rep) => {
 
 export const showErrorNotification = (rep) => {
     let respProv = '';
-    console.log('Error Response', rep);
+
     if (!rep)
     {
         respProv = 'Operation Failed'

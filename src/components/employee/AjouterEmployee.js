@@ -24,7 +24,7 @@ const AjouterEmployee = ({ triggerInsertEmp }) => {
         }
 
         getDept().then(rep => {
-            console.log('repppp', rep.data);
+
             setdept(rep.data.data);
         }).catch(err => {
             console.log('somme err', err);
@@ -44,7 +44,7 @@ const AjouterEmployee = ({ triggerInsertEmp }) => {
         form
             .validateFields()
             .then((values) => {
-                console.log('test', values);
+
                 // Trigger the callback to add employee with the validated values
                 triggerInsertEmp(values);
                 // Close the modal and reset form fields

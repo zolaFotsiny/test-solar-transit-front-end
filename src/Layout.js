@@ -38,7 +38,7 @@ const Index = () => {
     return (
         <Layout style={{ minHeight: '100vh' }}>
             {/* //Navigation */}
-            <Sider collapsible collapsed={collapsed} onCollapse={(value) => { console.log('collapse mode', value); setCollapsed(value) }}>
+            <Sider collapsible collapsed={collapsed} onCollapse={(value) => { setCollapsed(value) }}>
                 <div className="demo-logo-vertical" />
                 <img src="image/logo.png" alt="Avatar" style={{ marginTop: '20px', width: collapsed ? 40 : 100, height: collapsed ? 40 : 100, borderRadius: '50%' }} />
                 <h3 style={{ color: 'white', display: collapsed ? 'none' : 'block', }}>AgileMind Solutions</h3>
