@@ -9,6 +9,7 @@ import 'moment/locale/fr'; // Importer le fichier de localisation pour le franç
 import { formatDate } from '../../Utils/Date';
 import Filtre from '../Filtre/Filtre';
 import { getAttendance } from '../../services/serviceAttendance';
+import FicheEmp from './ficheEmp';
 const criteria = [
     {
         label: 'First Name',
@@ -42,6 +43,7 @@ export default function AttendanceList() {
                 id: u.id,
                 Employee: u.employee.firstName,
                 date: formatDate(u.date),
+                detail: <FicheEmp user={u.employee} />
 
             }));
 
@@ -170,6 +172,10 @@ export default function AttendanceList() {
             dataIndex: 'date',
             defaultSortOrder: 'ascend',
             sorter: (a, b) => moment(a.date).diff(moment(b.date)),
+        },
+        {
+            title: 'Detail',
+            dataIndex: 'detail',
         },
 
     ];
