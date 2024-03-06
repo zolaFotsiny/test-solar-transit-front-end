@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Table, Input, Divider, Spin } from 'antd';
 import './styles.css'
-import { getEmployee, saveEmployee } from '../../services/serviceEmployee';
+import { getEmployee, saveEmployee, updateEmployee } from '../../services/serviceEmployee';
 import { showErrorNotification, showSuccessNotification } from '../Notification';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import Highlighter from 'react-highlight-words';
 import Filtre from '../Filtre/Filtre'
 import AjouterEmployee from './AjouterEmployee';
+import ModalsUpdate from './ModalsUpdate';
 
 const criteria = [
     {
@@ -163,7 +164,19 @@ export default function TablesEmployee() {
             title: 'Last Name',
             dataIndex: 'lastName',
             ...getColumnSearchProps('lastName'),
-        }
+        },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            align: 'center',
+            render: (actions, record) => (
+                <Space size={18}>
+                    {actions.map((action, index) => (
+                        <React.Fragment key={index}>{action}</React.Fragment>
+                    ))}
+                </Space>
+            ),
+        },
 
     ];
 
@@ -223,6 +236,9 @@ export default function TablesEmployee() {
                 departmentId: u.department.name,
                 firstName: u.firstName,
                 lastName: u.lastName,
+                action: [
+                    <ModalsUpdate key={`update-${i}`} triggerUpdateUser={triggerUpdateUser} user={u} />,
+                ],
             });
         });
 
@@ -256,7 +272,43 @@ export default function TablesEmployee() {
                 setLoading(false);
             });
     };
-
+    function triggerUpdateUser(user) {
+        console.log('state', user);
+        setLoading(true)
+        let data = {
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "departmentId": user.department,
+        };
+        console.log('sdfsdfsdfsdfsdf', data);
+        // return true;
+        // todo get last update from serveur and set 
+        setLoading(true);
+        return updateEmployee(user.id, data)
+            .then(rep => {
+                console.log('update successs', rep);
+                // Update the state using the set function
+                setuser((prevUsers) => {
+                    return prevUsers.map((prevUser) => {
+                        if (prevUser.id === user.id)
+                        {
+                            // If the user ID matches, update the user
+                            showSuccessNotification();
+                            return { ...prevUser, ...data };
+                        }
+                        return prevUser;
+                    });
+                });
+                return true; // Return true for success
+            })
+            .catch(err => {
+                showErrorNotification()
+                console.log('some err', err);
+                return false; // Return false for failure
+            }).finally(() => {
+                setLoading(false);
+            });
+    };
     return (
         <div>
 
@@ -265,17 +317,13 @@ export default function TablesEmployee() {
                     marginBottom: 16,
                 }}
             >
-
                 <Filtre criteria={criteria} titleTooltip='Add Employee' children={<AjouterEmployee triggerInsertEmp={triggerInsertEmp} />} ></Filtre>
-
                 <Divider> </Divider>
-
                 <span
                     style={{
                         marginLeft: 8,
                     }}
                 >
-
                 </span>
             </div>
 
