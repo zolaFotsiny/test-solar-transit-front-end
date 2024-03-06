@@ -9,6 +9,7 @@ import Highlighter from 'react-highlight-words';
 import Filtre from '../Filtre/Filtre'
 import AjouterEmployee from './AjouterEmployee';
 import ModalsUpdate from './ModalsUpdate';
+import { getDept } from '../../services/serviceDept';
 
 const criteria = [
     {
@@ -34,6 +35,8 @@ const criteria = [
 export default function TablesEmployee() {
     const [user, setuser] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [departement, setDepartement] = useState([]);
+
     const searchInput = useRef(null);
     //Filtre need to be refactor
     const getColumnSearchProps = (dataIndex) => ({
@@ -130,8 +133,6 @@ export default function TablesEmployee() {
                 text
             ),
     });
-
-
     let columns = [
         {
             title: 'Id',
@@ -178,8 +179,6 @@ export default function TablesEmployee() {
         },
 
     ];
-
-
     // function adding style to column
     const addStyleToColumns = (columns, style) => {
         return columns.map(column => ({
@@ -193,8 +192,6 @@ export default function TablesEmployee() {
 
     columns = addStyleToColumns(columns, { backgroundColor: 'rgb(0, 80, 155)', color: 'white' });
 
-
-
     useEffect(() => {
         setLoading(true);
         getEmployee().then(rep => {
@@ -206,6 +203,16 @@ export default function TablesEmployee() {
         }).finally(() => {
             setLoading(false);
         });
+        //for modal
+        getDept().then(rep => {
+            setDepartement(rep.data.data);
+            console.log('asd', rep.data.data);
+        }).catch(err => {
+            console.log('somme err', err);
+        }).finally(() => {
+        });
+
+
     }, [])
 
 
@@ -235,7 +242,7 @@ export default function TablesEmployee() {
                 firstName: u.firstName,
                 lastName: u.lastName,
                 action: [
-                    <ModalsUpdate key={`update-${i}`} triggerUpdateUser={triggerUpdateUser} user={u} />,
+                    <ModalsUpdate key={`update-${i}`} triggerUpdateUser={triggerUpdateUser} user={u} departementP={departement} />,
                 ],
             });
         });

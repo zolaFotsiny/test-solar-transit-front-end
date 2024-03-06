@@ -6,36 +6,26 @@ import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import ClockCircleOutlined from '@ant-design/icons/ClockCircleOutlined';
 import { Input, Space, Row, Col } from 'antd';
 import { getDept } from '../../services/serviceDept';
-const ModalsUpdate = ({ triggerUpdateUser, user }) => {
+const ModalsUpdate = ({ triggerUpdateUser, user, departementP }) => {
     const { Option } = Select;
     const [modal2Open, setModal2Open] = useState(false);
-    const [departement, setDepartement] = useState(user.department.name);
+    const [departement, setDepartement] = useState([]);
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
     const [dept, setdept] = useState([]);
     const [confirmLoading, setConfirmLoading] = useState(false);
-    const [isFetchDept, setisFetchDept] = useState(false)
+
+
     useEffect(() => {
-        if (!isFetchDept)
-        {
-
-            getDept().then(rep => {
-                setdept(rep.data.data);
-                setisFetchDept(true)
-            }).catch(err => {
-                console.log('somme err', err);
-            }).finally(() => {
-            });
-        }
-
-    }, [isFetchDept]);
-
+        console.log('sdfsdf', departementP);
+        setDepartement(departementP)
+    }, [departementP])
 
     function handleSubmt() {
         setConfirmLoading(true);
         triggerUpdateUser({
             ...user,
-            departement,
+            dept,
             firstName,
             lastName
         })
@@ -83,7 +73,7 @@ const ModalsUpdate = ({ triggerUpdateUser, user }) => {
                         }}
                         layout="vertical"
                         initialValues={{
-                            Departement: departement,
+                            Departement: departement.name,
                             firstName: firstName,
                             lastName: lastName,
                         }}
@@ -103,9 +93,10 @@ const ModalsUpdate = ({ triggerUpdateUser, user }) => {
                                 >
                                     <Select
                                         placeholder="Select departement"
-                                        onChange={(value) => setDepartement(value)}
+                                        onChange={(value) => setdept(value)}
+                                        defaultValue={departementP ? departementP.name : undefined}
                                     >
-                                        {dept.map((option) => (
+                                        {Array.isArray(departement) && departement.map((option) => (
                                             <Option key={option.id} value={option.id}>
                                                 {option.name}
                                             </Option>
