@@ -177,7 +177,7 @@ export default function AttendanceList() {
             sorter: (a, b) => moment(a.date).diff(moment(b.date)),
         },
         {
-            title: 'Detail',
+            title: 'Details',
             dataIndex: 'detail',
         },
 

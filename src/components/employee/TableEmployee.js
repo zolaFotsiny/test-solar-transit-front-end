@@ -179,6 +179,24 @@ export default function TablesEmployee() {
         },
 
     ];
+
+    const data = [];
+    if (user && user.length > 0) {
+        user.map((u, i) => {
+            data.push({
+                key: i,
+                id: u.id,
+                employeeIdentifier: u.employeeIdentifier,
+                departmentId: u.department.name,
+                firstName: u.firstName,
+                lastName: u.lastName,
+                action: [
+                    <ModalsUpdate key={`update-${i}`} triggerUpdateUser={triggerUpdateUser} user={u} departementP={departement} />,
+                ],
+            });
+        });
+
+    }
     // function adding style to column
     const addStyleToColumns = (columns, style) => {
         return columns.map(column => ({
@@ -231,23 +249,6 @@ export default function TablesEmployee() {
         setSearchText('');
     };
 
-    const data = [];
-    if (user && user.length > 0) {
-        user.map((u, i) => {
-            data.push({
-                key: i,
-                id: u.id,
-                employeeIdentifier: u.employeeIdentifier,
-                departmentId: u.department.name,
-                firstName: u.firstName,
-                lastName: u.lastName,
-                action: [
-                    <ModalsUpdate key={`update-${i}`} triggerUpdateUser={triggerUpdateUser} user={u} departementP={departement} />,
-                ],
-            });
-        });
-
-    }
 
 
     //trigger function

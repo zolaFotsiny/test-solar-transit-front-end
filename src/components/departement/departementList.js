@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DepartementAdd from './departementAdd'
 import { getDept, saveDept, updateDept } from '../../services/serviceDept'
-import { Spin, Divider, Table } from 'antd';
+import { Spin, Divider, Table, Space } from 'antd';
 import { showErrorNotification, showSuccessNotification } from '../Notification';
 import DepartementUpdate from './departementUpdate';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
@@ -60,35 +60,32 @@ export default function DepartementList() {
             });
     };
 
-    const triggerUpdateDept = (dept) => {
-
-
-        let data = { "name": dept.firstName };
-
+    const triggerUpdateDept = (dept, val) => {
+        let data = { "name": val };
+        console.log(data);
         updateDept(dept.id, data)
             .then(rep => {
-
-                // setuser((prevUsers) => {
-                //     return prevUsers.map((prevUser) => {
-                //         if (prevUser.id === user.id)
-                //         {
-                //             // If the user ID matches, update the user
-                //             showSuccessNotification();
-                //             return { ...prevUser, ...data };
-                //         }
-                //         return prevUser;
-                //     });
-                // });
-                return true; // Return true for success
+                setdept(prevDepts => {
+                    return prevDepts.map(prevDept => {
+                        if (prevDept.id === dept.id) {
+                            // If the department ID matches, update the department
+                            showSuccessNotification(rep.data.message);
+                            return { ...prevDept, ...data }; // Assuming rep.data contains the updated department data
+                        }
+                        return prevDept;
+                    });
+                });
             })
             .catch(err => {
-                showErrorNotification('somme error')
-                console.log('some err', err);
-                return false; // Return false for failure
-            }).finally(() => {
+                showErrorNotification('Some error');
+                console.log('Some error', err);
+            })
+            .finally(() => {
                 // setLoading(false);
             });
     };
+
+
 
     // edit column table
     let columns = [
@@ -97,7 +94,6 @@ export default function DepartementList() {
             dataIndex: 'id',
             defaultSortOrder: 'ascend',
             sorter: (a, b) => a.id - b.id,
-
         },
         {
             title: 'Department',
@@ -107,18 +103,23 @@ export default function DepartementList() {
             title: 'Action',
             dataIndex: 'action',
             align: 'center',
-            render: (actions, record) => (
-
-                // actions.map((action, index) => (
-                <React.Fragment > </React.Fragment>
-                // ))
-
-
+            render: (text, record) => (
+                <DepartementUpdate key={`update-${record.id}`} triggerUpdateDept={triggerUpdateDept} dept={record} />
             ),
         },
-
-
     ];
+
+    // Format data to add in the table
+    const data = [];
+    if (dept && Array.isArray(dept) && dept.length > 0) {
+        dept.forEach((d) => {
+            data.push({
+                key: d.id,
+                id: d.id,
+                name: d.name,
+            });
+        });
+    }
     // function adding style to column
     const addStyleToColumns = (columns, style) => {
         return columns.map(column => ({
@@ -134,19 +135,7 @@ export default function DepartementList() {
 
 
 
-    //format data to add in table
-    const data = [];
-    dept.map((d, i) => {
-        data.push({
-            key: d.id,
-            id: d.id,
-            name: d.name,
-            // action: <DepartementUpdate key={`update-${i}`} triggerUpdateDept={triggerUpdateDept} dept={d} />,
-            action: [
-                <DepartementUpdate key={`update-${i}`} triggerUpdateDept={triggerUpdateDept} dept={d} />,
-            ],
-        });
-    });
+
     return (
         <div>
             <div

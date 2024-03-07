@@ -13,40 +13,34 @@ const axiosInstance = axios.create({
 
 
 export const getDept = async () => {
-    try
-    {
+    try {
 
         let response = '';
         response = await axiosInstance.get(`${BASE_URL}/department`);
         return response;
-    } catch (error)
-    {
+    } catch (error) {
         console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
         throw error;
     }
 };
 
 export const saveDept = async (data) => {
-    try
-    {
+    try {
         let response = '';
         response = await axiosInstance.post(`${BASE_URL}/department`, data);
         return response;
-    } catch (error)
-    {
+    } catch (error) {
         console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
         throw error;
     }
 };
 
 export const updateDept = async (id, data) => {
-    try
-    {
+    try {
         let response = '';
-        response = await axiosInstance.patch(`${BASE_URL}/department/${id}`, data);
+        response = await axiosInstance.put(`${BASE_URL}/department/${id}`, data);
         return response;
-    } catch (error)
-    {
+    } catch (error) {
         console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
         throw error;
     }

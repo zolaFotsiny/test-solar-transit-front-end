@@ -10,25 +10,16 @@ import { Input, Space, Row, Col } from 'antd';
 const DepartementUpdate = ({ triggerUpdateDept, dept }) => {
     const [modal2Open, setModal2Open] = useState(false);
     const [departement, setDepartement] = useState(dept.name);
+    const [departVal, setDepartementVal] = useState(dept.name);
     const [confirmLoading, setConfirmLoading] = useState(false);
 
 
 
     function handleSubmt() {
         // setConfirmLoading(true);
-
-
-
-
-        // triggerUpdateDept({
-        //     ...user,
-        //     departement,
-        // })
-        //     .then(rep => { if (rep) setModal2Open(false) })
-        //     .catch(error => { console.error('Error updating user:', error) })
-        //     .finally(() => {
-        //         setConfirmLoading(false); // Reset loading state after API response
-        //     });
+        console.log('departVal', departVal);
+        triggerUpdateDept(dept, departVal)
+        setModal2Open(false)
     }
 
     return (
@@ -75,7 +66,7 @@ const DepartementUpdate = ({ triggerUpdateDept, dept }) => {
                                 <Form.Item name="Departement" label="Departement">
                                     <Input
                                         placeholder="departement"
-                                        onChange={(e) => setDepartement(e.target.value)}
+                                        onChange={(e) => setDepartementVal(e.target.value)}
                                     />
                                 </Form.Item>
                             </Col>
