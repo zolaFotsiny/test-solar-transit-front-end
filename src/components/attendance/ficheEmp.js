@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Badge, Button, Col, Modal, Row } from 'antd';
+import { Avatar, Badge, Button, Col, Modal, Row, Tooltip } from 'antd';
 
 //input
 import { UserOutlined, EyeOutlined } from '@ant-design/icons';
@@ -23,9 +23,9 @@ const FicheEmp = ({ user }) => {
 
     return (
         <>
-
-            <EyeOutlined onClick={() => setModal2Open(true)} />
-
+            <Tooltip title="Details">
+                <EyeOutlined onClick={() => setModal2Open(true)} />
+            </Tooltip >
 
             <Modal
                 title="Employee record"
