@@ -54,7 +54,7 @@ const FicheEmp = ({ user }) => {
                                 Fullname : <strong>{user.employee.firstName + '  ' + user.employee.lastName}</strong>
                             </p>
                             <p>
-                                Department : <strong>{user.employee.departmentId}</strong>
+                                Department : <strong>{user.employee.department.name}</strong>
                             </p>
 
                             <p>
