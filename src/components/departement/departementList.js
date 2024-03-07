@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DepartementAdd from './departementAdd'
-import { getDept, saveDept, updateDept } from '../../services/serviceDept'
+import { getDept, getDeptFilter, saveDept, updateDept } from '../../services/serviceDept'
 import { Spin, Divider, Table, Space } from 'antd';
 import { showErrorNotification, showSuccessNotification } from '../Notification';
 import DepartementUpdate from './departementUpdate';
@@ -59,6 +59,20 @@ export default function DepartementList() {
                 // setLoading(false);
             });
     };
+
+    const triggerFiltre = (obj) => {
+        console.log('last', obj);
+
+
+        getDeptFilter(obj).then(rep => {
+            console.log('inito', rep);
+            setdept(rep.data.data);
+        }).catch(err => {
+            console.log('somme err', err);
+        }).finally(() => {
+            setLoading(false);
+        });
+    }
 
     const triggerUpdateDept = (dept, val) => {
         let data = { "name": val };
@@ -144,7 +158,7 @@ export default function DepartementList() {
                 }}
             >
 
-                <Filtre criteria={criteria} titleTooltip='Add Employee' children={<DepartementAdd triggerInsertDept={triggerInsertDept} />} ></Filtre>
+                <Filtre criteria={criteria} titleTooltip='Add Employee' triggerFiltre={triggerFiltre} children={<DepartementAdd triggerInsertDept={triggerInsertDept} />} ></Filtre>
 
                 <span
                     style={{

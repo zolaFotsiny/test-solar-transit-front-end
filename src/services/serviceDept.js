@@ -4,11 +4,11 @@ import axios from 'axios';
 const BASE_URL = "https://solar-transit-back-end.onrender.com";
 
 const axiosInstance = axios.create({
-    baseURL: BASE_URL
-    // headers: {
-    //     'Content-Type': 'application/json',
-    //     'Access-Control-Allow-Origin': '*', // Assurez-vous d'ajuster ceci en fonction de vos besoins
-    // },
+    baseURL: BASE_URL,
+    headers: {
+        // 'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*', // Assurez-vous d'ajuster ceci en fonction de vos besoins
+    },
 });
 
 
@@ -23,6 +23,18 @@ export const getDept = async () => {
         throw error;
     }
 };
+export const getDeptFilter = async (data) => {
+    try {
+        console.log('serv', data);
+        let response = '';
+        response = await axiosInstance.post(`${BASE_URL}/department/criteria`, data);
+        return response;
+    } catch (error) {
+        console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
+        throw error;
+    }
+};
+
 
 export const saveDept = async (data) => {
     try {

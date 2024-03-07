@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Form, Row, Col, Input, Button, DatePicker, Tooltip, Flex } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import moment from 'moment'
-export default function Filtre({ criteria, children }) {
+export default function Filtre({ criteria, children, triggerFiltre }) {
     useEffect(() => {
         console.log('criteria', criteria);
     }, []);
@@ -23,7 +23,7 @@ export default function Filtre({ criteria, children }) {
                 filtreNonNull[key] = filterInput[key];
                 console.log('Filtre trier', JSON.stringify(filtreNonNull));
 
-                
+
             }
         });
         return filtreNonNull;
@@ -37,7 +37,7 @@ export default function Filtre({ criteria, children }) {
             .then((values) => {
                 // console.log('non format', values);
                 const formattedFiltre = formatFiltreObject(values);
-
+                triggerFiltre(formattedFiltre);
                 console.log('repreprperperp', formattedFiltre);
             })
             .catch((errorInfo) => {

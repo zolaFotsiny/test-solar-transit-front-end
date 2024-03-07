@@ -73,7 +73,7 @@ const ModalsUpdate = ({ triggerUpdateUser, user, departementP }) => {
                         }}
                         layout="vertical"
                         initialValues={{
-                            Departement: departement.name,
+                            // Departement: departement,
                             firstName: firstName,
                             lastName: lastName,
                         }}
@@ -81,7 +81,7 @@ const ModalsUpdate = ({ triggerUpdateUser, user, departementP }) => {
 
                         <Row>
                             <Col span={18}>
-                                <Form.Item
+                                {/* <Form.Item
                                     name="departement"
                                     label="Departement"
                                     rules={[
@@ -102,7 +102,9 @@ const ModalsUpdate = ({ triggerUpdateUser, user, departementP }) => {
                                             </Option>
                                         ))}
                                     </Select>
-                                </Form.Item>
+                                </Form.Item> */}
+
+
                                 <Form.Item name="firstName" label="First Name">
                                     <Input
                                         placeholder="first name"
