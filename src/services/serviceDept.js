@@ -13,23 +13,27 @@ const axiosInstance = axios.create({
 
 
 export const getDept = async () => {
-    try {
+    try
+    {
 
         let response = '';
         response = await axiosInstance.get(`${BASE_URL}/department`);
         return response;
-    } catch (error) {
+    } catch (error)
+    {
         console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
         throw error;
     }
 };
 export const getDeptFilter = async (data) => {
-    try {
+    try
+    {
         console.log('serv', data);
         let response = '';
         response = await axiosInstance.post(`${BASE_URL}/department/criteria`, data);
         return response;
-    } catch (error) {
+    } catch (error)
+    {
         console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
         throw error;
     }
@@ -37,22 +41,39 @@ export const getDeptFilter = async (data) => {
 
 
 export const saveDept = async (data) => {
-    try {
+    try
+    {
         let response = '';
         response = await axiosInstance.post(`${BASE_URL}/department`, data);
         return response;
-    } catch (error) {
+    } catch (error)
+    {
         console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
         throw error;
     }
 };
 
 export const updateDept = async (id, data) => {
-    try {
+    try
+    {
         let response = '';
         response = await axiosInstance.put(`${BASE_URL}/department/${id}`, data);
         return response;
-    } catch (error) {
+    } catch (error)
+    {
+        console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
+        throw error;
+    }
+};
+
+export const getUserDept = async (id) => {
+    try
+    {
+        let response = '';
+        response = await axiosInstance.get(`${BASE_URL}/department/${id}`);
+        return response;
+    } catch (error)
+    {
         console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
         throw error;
     }
