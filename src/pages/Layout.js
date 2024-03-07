@@ -4,7 +4,10 @@ import { Layout, Menu, theme, Divider } from 'antd';
 
 import {
     FileExcelFilled,
-    UsergroupAddOutlined
+    UsergroupAddOutlined,
+    LineChartOutlined,
+    HighlightOutlined,
+    BranchesOutlined
 } from '@ant-design/icons';
 
 import Test from '../components/Test';
@@ -13,6 +16,7 @@ import Head from '../components/Header/Head';
 import TablesEmployee from '../components/employee/TableEmployee';
 import TimeLine from '../components/Import/TimeLine';
 import AttendanceList from '../components/attendance/attendanceList';
+import LogarithmicChart from '../Utils/MonthlyTemperatureChart ';
 const { Content, Sider, Footer } = Layout;
 
 const Index = () => {
@@ -21,10 +25,11 @@ const Index = () => {
     const [selectedMenuItem, setSelectedMenuItem] = useState('1');
 
     const items = [
-        getItem('Depatement', '1', <UsergroupAddOutlined />),
+        getItem('Depatement', '1', <BranchesOutlined />),
         getItem('Employee', '2', <UsergroupAddOutlined />),
-        getItem('Attendance', '3', <UsergroupAddOutlined />),
+        getItem('Attendance', '3', <HighlightOutlined />),
         getItem('Manage Files', '4', <FileExcelFilled />),
+        getItem('Chart', '5', <LineChartOutlined />),
     ];
 
     const {
@@ -106,6 +111,14 @@ const Index = () => {
                             <>
                                 <AttendanceList  ></AttendanceList>
                             </>
+                        }
+                        {
+
+                            selectedMenuItem === '5' &&
+                            <>
+                                <LogarithmicChart></LogarithmicChart>
+                            </>
+
                         }
 
 

@@ -22,6 +22,19 @@ export const getAttendance = async () => {
     }
 };
 
+
+export const getAttendanceStat = async () => {
+    try {
+        let response = '';
+        console.log(`HUHU_Call_GET:${BASE_URL}/attendance/stat`);
+        response = await axiosInstance.get(`${BASE_URL}/attendance/stat`);
+        return response;
+    } catch (error) {
+        console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
+        throw error;
+    }
+};
+
 export const deleteAttendance = async (id) => {
     try {
         let response = '';
