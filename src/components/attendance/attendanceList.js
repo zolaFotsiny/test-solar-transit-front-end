@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Spin, Badge, Input, Divider, Space, Button } from 'antd';
+import { Spin, Badge, Input, DatePicker, Space, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import ModalSupprimer from '../../Utils/ModalSupprimer';
 import { showErrorNotification, showSuccessNotification } from '../Notification';
@@ -80,6 +80,46 @@ export default function AttendanceList() {
 
 
     const searchInput = useRef(null);
+
+
+    const getDateColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+            <div style={{ padding: 8 }}>
+                <DatePicker.RangePicker
+                    style={{ marginBottom: 8, display: 'block' }}
+                    placeholder={['Start Date', 'End Date']}
+                    format="YYYY-MM-DD"
+                    value={selectedKeys[0] ? [moment(selectedKeys[0]), moment(selectedKeys[1])] : []}
+                    onChange={(dates) => {
+                        const values = dates ? [dates[0].format('YYYY-MM-DD'), dates[1].format('YYYY-MM-DD')] : [];
+                        setSelectedKeys(values);
+                        confirm({ closeDropdown: false });
+                    }}
+                />
+                <Button
+                    type="primary"
+                    onClick={() => confirm()}
+                    size="small"
+                    style={{ width: 90, marginRight: 8 }}
+                >
+                    Search
+                </Button>
+                <Button onClick={() => clearFilters()} size="small" style={{ width: 90 }}>
+                    Reset
+                </Button>
+            </div>
+        ),
+        filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+        onFilter: (value, record) => {
+            if (typeof value === 'string') {
+                value = [value, value];
+            }
+            const recordDate = moment(record[dataIndex]);
+            const [start, end] = value.map(dateStr => moment(dateStr, 'YYYY-MM-DD'));
+            return recordDate.isBetween(start, end, 'day', '[]');
+        },
+    });
+
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -191,8 +231,7 @@ export default function AttendanceList() {
         {
             title: 'Date',
             dataIndex: 'date',
-            defaultSortOrder: 'ascend',
-            sorter: (a, b) => moment(a.date).diff(moment(b.date)),
+            ...getDateColumnSearchProps('date'),
         },
         {
             title: 'Actions',
