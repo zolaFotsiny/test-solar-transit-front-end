@@ -61,7 +61,7 @@ export default function AttendanceList() {
                 date: formatDate(u.date),
                 action: [
                     <ModalSupprimer key={`delete-${u.id}`} triggerDeleteUser={triggerDeleteAttendance} idDelete={u.id} />,
-                    <FicheEmp user={u.employee} />,
+                    <FicheEmp user={u} />,
                 ],
 
             }));

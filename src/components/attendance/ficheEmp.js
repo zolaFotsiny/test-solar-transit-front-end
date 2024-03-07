@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Badge, Button, Col, Modal, Row } from 'antd';
 
 //input
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, EyeOutlined } from '@ant-design/icons';
 import { Space } from 'antd';
 import { formatDate } from '../../Utils/Date';
 const FicheEmp = ({ user }) => {
@@ -23,9 +23,9 @@ const FicheEmp = ({ user }) => {
 
     return (
         <>
-            <Button type="primary" ghost onClick={() => setModal2Open(true)}>
-                Fiche
-            </Button>
+
+            <EyeOutlined onClick={() => setModal2Open(true)} />
+
 
             <Modal
                 title="Employee record"
@@ -51,14 +51,14 @@ const FicheEmp = ({ user }) => {
                         </Col>
                         <Col span={12}>
                             <p>
-                                Fullname : <strong>{user.firstName + '  ' + user.lastName}</strong>
+                                Fullname : <strong>{user.employee.firstName + '  ' + user.employee.lastName}</strong>
                             </p>
                             <p>
-                                Department : <strong>{user.departmentId}</strong>
+                                Department : <strong>{user.employee.departmentId}</strong>
                             </p>
 
                             <p>
-                                Registered since : <strong>{formatDate(user.createdAt)}</strong>
+                                Date : <strong>{formatDate(user.date)}</strong>
                             </p>
                         </Col>
                     </Row>
