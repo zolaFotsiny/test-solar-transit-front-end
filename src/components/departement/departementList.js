@@ -7,6 +7,7 @@ import DepartementUpdate from './departementUpdate';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import Filtre from '../Filtre/Filtre';
 import './styles.css'
+import EmptDept from './empDept';
 
 const criteria = [
     {
@@ -42,17 +43,19 @@ export default function DepartementList() {
     };
     const triggerInsertDept = (data) => {
         saveDept(data).then(rep => {
-            if (rep.data.status === 201) {
+            if (rep.data.status === 201)
+            {
 
                 let deptPlusOne = [...dept, rep.data.data]
                 setdept(deptPlusOne);
                 showSuccessNotification(rep.data.message);
             }
-            else {
+            else
+            {
                 showErrorNotification(rep.data.message)
             }
         }).catch(err => {
-            showErrorNotification(err.response.data.message || 'An error occurred')
+            showErrorNotification('Some error')
             console.log('somme err', err);
         })
             .finally(() => {
@@ -81,7 +84,8 @@ export default function DepartementList() {
             .then(rep => {
                 setdept(prevDepts => {
                     return prevDepts.map(prevDept => {
-                        if (prevDept.id === dept.id) {
+                        if (prevDept.id === dept.id)
+                        {
                             // If the department ID matches, update the department
                             showSuccessNotification(rep.data.message);
                             return { ...prevDept, ...data }; // Assuming rep.data contains the updated department data
@@ -118,14 +122,19 @@ export default function DepartementList() {
             dataIndex: 'action',
             align: 'center',
             render: (text, record) => (
-                <DepartementUpdate key={`update-${record.id}`} triggerUpdateDept={triggerUpdateDept} dept={record} />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <DepartementUpdate key={`update-${record.id}`} triggerUpdateDept={triggerUpdateDept} dept={record} />
+                    <div style={{ width: '16px' }} /> {/* Adjust the width for more space */}
+                    <EmptDept key={`de-${record.id}`} dept={record} />
+                </div>
             ),
         },
     ];
 
     // Format data to add in the table
     const data = [];
-    if (dept && Array.isArray(dept) && dept.length > 0) {
+    if (dept && Array.isArray(dept) && dept.length > 0)
+    {
         dept.forEach((d) => {
             data.push({
                 key: d.id,
