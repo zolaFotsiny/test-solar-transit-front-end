@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Spin, Badge, Input, Divider, Space, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-
+import ModalSupprimer from '../../Utils/ModalSupprimer';
+import { showErrorNotification, showSuccessNotification } from '../Notification';
 import Highlighter from 'react-highlight-words';
 import { Table } from 'antd';
 import moment from 'moment';
 import 'moment/locale/fr'; // Importer le fichier de localisation pour le français
 import { formatDate } from '../../Utils/Date';
 import Filtre from '../Filtre/Filtre';
-import { getAttendance } from '../../services/serviceAttendance';
+import { deleteAttendance, getAttendance } from '../../services/serviceAttendance';
 import FicheEmp from './ficheEmp';
 const criteria = [
 
@@ -29,6 +30,24 @@ export default function AttendanceList() {
         setSearchText('');
     };
 
+    const triggerDeleteAttendance = (idAttendance) => {
+        setLoading(true);
+        console.log(idAttendance);
+        console.log('state', attendance)
+
+        deleteAttendance(idAttendance).then(rep => {
+            setAttendance(prevAttendance => {
+                const updatedState = prevAttendance.filter(item => item.id !== idAttendance);
+                return updatedState;
+            });
+            showSuccessNotification(rep.data.message);
+        }).catch(err => {
+            showErrorNotification(err.response.data.message)
+        })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -40,7 +59,10 @@ export default function AttendanceList() {
                 id: u.id,
                 Employee: u.employee.firstName,
                 date: formatDate(u.date),
-                detail: <FicheEmp user={u.employee} />
+                action: [
+                    <ModalSupprimer key={`delete-${u.id}`} triggerDeleteUser={triggerDeleteAttendance} idDelete={u.id} />,
+                    <FicheEmp user={u.employee} />,
+                ],
 
             }));
 
@@ -173,8 +195,16 @@ export default function AttendanceList() {
             sorter: (a, b) => moment(a.date).diff(moment(b.date)),
         },
         {
-            title: 'Details',
-            dataIndex: 'detail',
+            title: 'Actions',
+            dataIndex: 'action',
+            align: 'center',
+            render: (actions, record) => (
+                <Space size={18}>
+                    {actions.map((action, index) => (
+                        <React.Fragment key={index}>{action}</React.Fragment>
+                    ))}
+                </Space>
+            ),
         },
 
     ];

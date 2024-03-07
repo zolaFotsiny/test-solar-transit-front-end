@@ -22,6 +22,18 @@ export const getAttendance = async () => {
     }
 };
 
+export const deleteAttendance = async (id) => {
+    try {
+        let response = '';
+        // console.log(`HUHU_Call_GET:${BASE_URL}/employee`);
+        response = await axiosInstance.delete(`${BASE_URL}/attendance/${id}`);
+        return response;
+    } catch (error) {
+        console.error('HUHU_ERROR lors de l\'envoi des données à l\'API :', error);
+        throw error;
+    }
+};
+
 
 
 
