@@ -12,22 +12,7 @@ import ModalsUpdate from './ModalsUpdate';
 import { getDept } from '../../services/serviceDept';
 
 const criteria = [
-    {
-        label: 'First Name',
-        name: 'firstname',
-        type: 'text',
 
-    },
-    {
-        label: 'Last Name',
-        name: 'lastname',
-        type: 'text',
-    },
-    {
-        label: 'Departement',
-        name: 'departement',
-        type: 'text'
-    }
 ];
 
 

@@ -11,11 +11,7 @@ import Filtre from '../Filtre/Filtre';
 import { getAttendance } from '../../services/serviceAttendance';
 import FicheEmp from './ficheEmp';
 const criteria = [
-    {
-        label: 'First Name',
-        name: 'firstName',
-        type: 'text'
-    }
+
 ];
 
 export default function AttendanceList() {
@@ -202,7 +198,7 @@ export default function AttendanceList() {
 
         <>
             <Filtre criteria={criteria}></Filtre>
-
+            <h1>Attendance List</h1>
             <Table columns={columns} dataSource={attendance} onChange={onChange} />
             {
                 loading ? <Spin tip="Loading..." size='large' spinning> </Spin> : null

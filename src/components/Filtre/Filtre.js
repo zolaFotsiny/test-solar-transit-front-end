@@ -73,18 +73,19 @@ export default function Filtre({ criteria, children, triggerFiltre }) {
                         <Col>
 
                             <Form.Item label=" " style={{ display: 'flex', alignItems: 'center' }}>
+                                {criteria && criteria.length > 0 && (
+                                    <Tooltip title='Search'>
 
-                                <Tooltip title='Search'>
-
-                                    <Button
-                                        ghost
-                                        type="primary"
-                                        onClick={() => handleSubmtFiltre()}
-                                        icon={<SearchOutlined />}
-                                        style={{ marginRight: '8px' }} // Adjust margin as needed
-                                    >
-                                    </Button>
-                                </Tooltip>
+                                        <Button
+                                            ghost
+                                            type="primary"
+                                            onClick={() => handleSubmtFiltre()}
+                                            icon={<SearchOutlined />}
+                                            style={{ marginRight: '8px' }} // Adjust margin as needed
+                                        >
+                                        </Button>
+                                    </Tooltip>
+                                )}
 
                                 {children && React.isValidElement(children) && React.cloneElement(children, { handleSubmtFiltre })}
                             </Form.Item>
