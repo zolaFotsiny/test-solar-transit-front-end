@@ -43,9 +43,15 @@ const TimeLine = () => {
     };
 
     const transformDataForTimeline = () => {
+        // Sort the attendances by date in descending order
+        const sortedAttendances = [...attendances].sort((a, b) => {
+            // Swap a and b to sort in descending order
+            return new Date(b.date) - new Date(a.date);
+        });
+
         const timelineData = [];
 
-        attendances.forEach((attendance) => {
+        sortedAttendances.forEach((attendance) => {
             const date = new Date(attendance.date).toLocaleDateString();
             const existingEntry = timelineData.find((entry) => entry.label === date);
 
@@ -67,7 +73,6 @@ const TimeLine = () => {
 
         return timelineData;
     };
-
 
 
     return (
