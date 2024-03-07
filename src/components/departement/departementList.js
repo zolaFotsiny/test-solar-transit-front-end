@@ -52,7 +52,7 @@ export default function DepartementList() {
                 showErrorNotification(rep.data.message)
             }
         }).catch(err => {
-            showErrorNotification('Some error')
+            showErrorNotification(err.response.data.message || 'An error occurred')
             console.log('somme err', err);
         })
             .finally(() => {
