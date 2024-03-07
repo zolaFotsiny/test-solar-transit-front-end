@@ -4,7 +4,7 @@ export const showSuccessNotification = (rep) => {
 
 
     notification.success({
-        message: 'Succès',
+        message: 'Succees',
         description: rep,
         placement: 'bottomLeft',
     });
@@ -18,12 +18,10 @@ export const showSuccessNotification = (rep) => {
 export const showErrorNotification = (rep) => {
     let respProv = '';
 
-    if (!rep)
-    {
+    if (!rep) {
         respProv = 'Operation Failed'
     }
-    else
-    {
+    else {
         respProv = rep
     }
     notification.error({

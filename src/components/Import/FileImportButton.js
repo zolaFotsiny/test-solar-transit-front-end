@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Upload, message, App } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 
-const FileImportButton = () => {
+const FileImportButton = ({ triggerAttendance }) => {
     const checkFileType = (file) => {
         const allowedTypes = [
             'application/vnd.ms-excel',
@@ -12,7 +12,7 @@ const FileImportButton = () => {
             file.name.endsWith('.xls') ||
             file.name.endsWith('.xlsx');
         if (!isAllowedType) {
-            message.error('You can only upload CSV, Excel, JPG, PNG, or PDF files!');
+            message.error('You can only upload Excel files!');
         }
         return isAllowedType;
     };
@@ -37,6 +37,7 @@ const FileImportButton = () => {
                     lastModified: file.lastModified,
                 });
                 // await handleImportAreaClick()
+                triggerAttendance();
                 message.success(`${file.name} file details logged successfully`);
                 return true;
             }
@@ -46,6 +47,7 @@ const FileImportButton = () => {
             message.error(`Error logging file details for ${file.name}`);
         }
     };
+
 
     const props = {
         action: 'https://solar-transit-back-end.onrender.com/file/upload',

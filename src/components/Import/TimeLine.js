@@ -4,6 +4,7 @@ import { DownloadOutlined, ClockCircleOutlined } from '@ant-design/icons';
 
 import FileImportButton from './FileImportButton';
 import { getAttendance } from '../../services/serviceAttendance';
+import { showSuccessNotification } from '../Notification';
 
 const TimeLine = () => {
     const [mode, setMode] = useState('left');
@@ -20,7 +21,22 @@ const TimeLine = () => {
 
 
 
+    function triggerAttendance() {
 
+        setTimeout(() => {
+            getAttendance().then((rep) => {
+                setAttendances(rep.data.data);
+                showSuccessNotification('File Uploaded')
+                console.log('repppp', rep.data);
+            }).catch((err) => {
+                showSuccessNotification('File not Uploaded')
+                console.log('somme err', err);
+            });
+
+        }, 3000);
+
+
+    }
 
     const onChange = (e) => {
         setMode(e.target.value);
@@ -56,8 +72,9 @@ const TimeLine = () => {
 
     return (
         <>
+            <h1>Import File</h1>
             <div style={{ marginBottom: '50px' }}>
-                <FileImportButton></FileImportButton>
+                <FileImportButton triggerAttendance={triggerAttendance}></FileImportButton>
 
             </div>
             <div style={{ marginBottom: '50px' }}></div>
